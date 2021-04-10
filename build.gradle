@@ -1,0 +1,35 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group 'ksaito.practice'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+mainClassName = 'ksaito.practice.httpRequest.Application'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    annotationProcessor("org.projectlombok:lombok:1.18.20")
+    compile ("org.projectlombok:lombok:1.18.20")
+    compile 'org.slf4j:slf4j-api:1.7.30'
+    compile 'org.slf4j:slf4j-simple:1.7.30'
+    implementation group: 'com.google.http-client', name: 'google-http-client', version: '1.39.2'
+    implementation group: 'args4j', name: 'args4j', version: '2.33'
+    implementation group: 'org.yaml', name: 'snakeyaml', version: '1.28'
+}
+
+jar {
+    applicationDefaultJvmArgs = [
+            '-Dfile.encoding=UTF-8'
+            , '-Droot.level=info'
+    ]
+    manifest {
+        attributes('Main-Class': mainClassName)
+    }
+    from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+}
